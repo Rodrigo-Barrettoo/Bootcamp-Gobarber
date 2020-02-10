@@ -53,6 +53,12 @@ class AppointmentController {
       where: { id: provider_id, provider: true },
     });
 
+    if (provider_id === req.userId) {
+      return res
+        .status(401)
+        .json({ error: 'You cannot create appointments with yourself' });
+    }
+
     if (!CheckIsProvider) {
       return res
         .status(401)
